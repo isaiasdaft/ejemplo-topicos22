@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Button from 'react-bootstrap/Button';
  
 //function Example(){
   //  const get_name[]=>{
@@ -15,9 +16,12 @@ function Example() {
             <div className="row justify-content-center">
                 <div className="col-md-8">
                     <div className="card">
+                        
+
+                        <Button variant="primary">pri</Button>{' '}
                         <div className="card-header">Example components </div>
 
-                        <div className="card-body"></div>
+                        <div className="card-body">esto es la página prinipal</div>
                     </div>
                 </div>
             </div>
