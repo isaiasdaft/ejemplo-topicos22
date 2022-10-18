@@ -6,9 +6,12 @@
 
  import './bootstrap';
 
- import '../css/app.css';
- import ReactDOM from 'react-dom/client';
- import Example from './components/Example';
- import NavBar from './components/NavBar';
+import '../css/app.css';
+import ReactDOM from 'react-dom/client';
+import Example from './components/Example';
+import NavBar from './components/NavBar';
+import First from './components/First';
+import App from './components/App'; 
 
- ReactDOM.createRoot(document.getElementById('application')).render(<NavBar />);
+
+ ReactDOM.createRoot(document.getElementById('aplication')).render(<App />);

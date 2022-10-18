@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -8,59 +8,101 @@ import Nav from 'react-bootstrap/Nav';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Card from 'react-bootstrap/Card';
+
  
-//function Example(){
-  //  const get_name[]=>{
-    //    axios.get("https://localhost/topicos22/public/")
+function BasicExample(){
+  const [formValue, setFormValue,]=useState({
+    email:'',
+    password:''
 
-    //}
-//}
+  })
 
-function Example() {
+  const [name, setName] = useState('')
+  const [students, setStudents] = useState([])
+
+  const onChange = (e) => {
+    e.persist();
+    setFormValue({...formValue, [e.target.name]: e.target.value})
+
+  }
+
+  const handleSubmit = (e) =>{
+
+    if (e && e.preventDefault()) e.preventDefault();
+    const formData = new FormData()
+    formData.append("email", formValue.email)
+    axios.post("http://localhost:8888/topicos22/public/api/show_test",
+    formData,
+    {
+      headers: {'Content-Type': 'multipart/formData',
+      'Accept': 'aplication/json'}}
+    ).then(response => {
+      if(response.status == 200){
+        console.log(response.data)
+        setStudents(response.data)
+
+
+      }else console.log("Status", response.status)  
+
+
+      
+    }).catch(error => {
+      console.log(error)
+    });
+  }
+
     return (
-        <Container>
-            <Row>
-        <Nav>
-            <Col>
-        <Form>
-      <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Label>Email address</Form.Label>
-        <Form.Control type="email" placeholder="Enter email" />
-        <Form.Text className="text-muted">
-          We'll never share your email with anyone else.
-        </Form.Text>
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Password</Form.Label>
-        <Form.Control type="password" placeholder="Password" />
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="formBasicCheckbox">
-        <Form.Check type="checkbox" label="Check me out" />
-      </Form.Group>
-      <Button variant="primary" type="submit">
-        Submit
-      </Button>
+     <Container>
+        <Row>
+          <Col md={10}>
+            <Form onSubmit={handleSubmit}>
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label>Email address</Form.Label>
+                <Form.Control type="text" placeholder="Enter email" 
+                   name="email" value={formValue.email} onChange={onChange}/>
+                    <Form.Text className="text-muted">
+                We'll never share your email with anyone else.
+                    </Form.Text>
+                </Form.Group>
+
+               <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Label>Password</Form.Label>
+                <Form.Control type="password" placeholder="Password"
+                name="password"  />
+                </Form.Group>
+               <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                <Form.Check type="checkbox" label="Check me out" />
+              </Form.Group>
+          <Button variant="dark" type="submit">
+             ingresar
+          </Button>
     </Form>
     </Col>
-    <Col>
-    <Card style={{ width: '18rem' }}>
-      <Card.Body>
-        <Card.Title>Card Title</Card.Title>
-        <Card.Subtitle className="mb-2 text-muted">Card Subtitle</Card.Subtitle>
-        <Card.Text>
-          Some quick example text to build on the card title and make up the
-          bulk of the card's content.
-        </Card.Text>
-        <Card.Link href="#">Card Link</Card.Link>
-        <Card.Link href="#">Another Link</Card.Link>
-      </Card.Body>
-    </Card>
-    </Col>
-    </Nav>
+
+    <Col md={4}>
+
+      {students.map((student)=>(
+        <Card style={{ width: '18rem' }} key={student.id}> 
+        
+        <Card.Img variant="top" src="holder.js/100px180" />
+        <Card.Body>
+          <Card.Title>{student.email}</Card.Title>
+          <Card.Text>
+            Some quick example text to build on the card title and make up the
+            bulk of the card's content.
+          </Card.Text>
+          <Button variant="primary">Go somewhere</Button>
+        </Card.Body>
+      </Card>
+
+))}
+
+</Col>
+ 
     </Row>
     </Container>
     );
 }
 
-export default Example;
+export default BasicExample;
 

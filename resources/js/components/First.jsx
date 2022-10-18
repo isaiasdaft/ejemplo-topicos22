@@ -5,7 +5,7 @@ function First(){
     return (
         <Text>Hola</Text>
 
-    );
+    )
 } 
 
 export default First;

@@ -103,4 +103,11 @@ class StudentController extends Controller
     public function showToken(){
         echo csrf_token();
     }
+
+    public function show_test(Request $request){
+        $student = Student::limit(3)->get();
+        //$student = Student::where('name',$request->name)->get();
+        //$user = User::where('email', $request->email)->get();
+        return $student;
+    }
 }
